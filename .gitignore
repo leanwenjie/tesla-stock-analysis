@@ -1,0 +1,27 @@
+# Virtual Environment
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+# IDE specific files
+.vscode/
+.idea/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Environment variables
+.env
+
+# Analysis output
+analysis_graphs/
+
+# Data files
+*.xlsx
+*.csv 
