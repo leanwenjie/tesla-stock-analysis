@@ -1,0 +1,65 @@
+TESLA STOCK ANALYSIS REPORT
+=========================
+
+Project Background
+------------------
+Organization: Tesla Inc.
+Target Users: Investors and Financial Analysts
+Benefits: Stock price forecasting and investment decision support
+
+Project Objectives
+------------------
+- Analyze Tesla stock price trends and patterns
+- Develop multiple predictive models for price forecasting
+- Compare model performance and generate actionable insights
+
+Models Used
+-----------
+- Linear Regression - Trend analysis
+- Random Forest - Complex pattern recognition
+- Prophet - Seasonality and trend decomposition
+- XGBoost - Gradient boosting for complex patterns
+- KNN Regression - Non-parametric regression
+
+Model Performance
+-----------------
+
+Linear Regression:
+  MSE: 0.6207
+  MAE: 0.6736
+  R2: 0.9998
+
+Random Forest:
+  MSE: 46.2578
+  MAE: 5.0248
+  R2: 0.9820
+
+Prophet:
+  MSE: 53755.0790
+  MAE: 213.8217
+  R2: -19.9642
+
+XGBoost:
+  MSE: 43.8426
+  MAE: 5.0008
+  R2: 0.9829
+
+KNN Regression:
+  MSE: 30298.7792
+  MAE: 161.9371
+  R2: -10.8164
+
+Key Findings
+------------
+Price Trends: Current price: $219.91
+Volatility: 3.55%
+Trading Volume: Average: 107906500
+Best Model: Linear Regression
+
+Recommendations
+---------------
+- Monitor market conditions regularly
+- Consider technical indicators for entry/exit points
+- Implement risk management strategies
+- Use ensemble approach combining multiple models for better predictions
+
