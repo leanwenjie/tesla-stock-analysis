@@ -345,3 +345,77 @@ st.dataframe(pd.DataFrame({'Date': test_dates, 'Actual': y_test.values, 'Predict
 
 st.subheader("📈 Future Forecast")
 st.dataframe(pd.DataFrame({'Date': future_dates, 'Forecasted Close': future_prices}).reset_index(drop=True))
+
+# Calculate indicators
+df['Daily_Return'] = df['Close'].pct_change() * 100
+df['MA20'] = df['Close'].rolling(window=50).mean()
+df['MA50'] = df['Close'].rolling(window=200).mean()
+df['RSI'] = calculate_rsi(df['Close'].values, period=14)
+df['Price_Range'] = df['High'] - df['Low']
+
+# Add the plots to Streamlit
+st.subheader("Stock Price Analysis")
+
+# Create a 2x2 grid for the plots
+fig1 = go.Figure()
+fig1.add_trace(go.Scatter(x=df['Date'], y=df['Close'], name='Close Price', line=dict(color='lightblue')))
+fig1.add_trace(go.Scatter(x=df['Date'], y=df['MA20'], name='20-day MA', line=dict(color='red')))
+fig1.add_trace(go.Scatter(x=df['Date'], y=df['MA50'], name='50-day MA', line=dict(color='green')))
+fig1.update_layout(
+    title='Tesla Stock Price and Moving Averages',
+    xaxis_title='Date',
+    yaxis_title='Price',
+    hovermode='x unified',
+    xaxis=dict(tickformat='%b %Y')
+)
+
+fig2 = go.Figure()
+fig2.add_trace(go.Bar(x=df['Date'], y=df['Volume'], name='Volume', marker_color='dodgerblue'))
+fig2.update_layout(
+    title='Trading Volume',
+    xaxis_title='Date',
+    yaxis_title='Volume',
+    hovermode='x unified',
+    xaxis=dict(tickformat='%b %Y')
+)
+
+fig3 = go.Figure()
+fig3.add_trace(go.Histogram(x=df['Daily_Return'].dropna(), nbinsx=50, name='Daily Returns', marker_color='steelblue'))
+fig3.update_layout(
+    title='Distribution of Daily Returns',
+    xaxis_title='Daily Return (%)',
+    yaxis_title='Frequency',
+    hovermode='x unified',
+    xaxis=dict(tickformat='%b %Y')
+)
+
+fig4 = go.Figure()
+fig4.add_trace(go.Scatter(x=df['Date'], y=df['Price_Range'], name='Price Range', line=dict(color='seagreen')))
+fig4.update_layout(
+    title='Daily Price Range (High-Low)',
+    xaxis_title='Date',
+    yaxis_title='Price Range',
+    hovermode='x unified',
+    xaxis=dict(tickformat='%b %Y')
+)
+
+# Remove columns and display each plot in its own row
+st.plotly_chart(fig1, use_container_width=True)
+st.plotly_chart(fig2, use_container_width=True)
+st.plotly_chart(fig3, use_container_width=True)
+st.plotly_chart(fig4, use_container_width=True)
+
+# Add RSI Plot
+st.subheader("Technical Indicators")
+fig_rsi = go.Figure()
+fig_rsi.add_trace(go.Scatter(x=df['Date'], y=df['RSI'], name='RSI', line=dict(color='purple')))
+fig_rsi.add_hline(y=70, line_dash="dash", line_color="red", annotation_text="Overbought (70)")
+fig_rsi.add_hline(y=30, line_dash="dash", line_color="green", annotation_text="Oversold (30)")
+fig_rsi.update_layout(
+    title='Relative Strength Index (RSI)',
+    xaxis_title='Date',
+    yaxis_title='RSI Value',
+    hovermode='x unified',
+    xaxis=dict(tickformat='%b %Y')
+)
+st.plotly_chart(fig_rsi, use_container_width=True)
